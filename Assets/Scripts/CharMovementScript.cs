@@ -74,18 +74,19 @@ public class CharMovement : MonoBehaviour
 
         isMoving = false;
     }
-    void OnCollisionEnter2D(Collision2D other)
+    void OnCollisionEnter2D(Collision2D other) //Scene Controller (gameover, ending)
     {
         if (other.gameObject.CompareTag("obstacle"))
         {
-        logic.gameOver();
+        logic.gameOver_crash();
         playerIsAlive = false;
         Debug.Log("gameover true");
         }
+        else if (other.gameObject.CompareTag("Finish"))
+        {
+        logic.missionSuccess();
+        playerIsAlive = false;
+        Debug.Log("missionSuccess true");
+        }
     }
-    void OnCollisionEnter(Collision collision)
-{
-    Debug.Log(collision.collider.name);
-}
-
 }

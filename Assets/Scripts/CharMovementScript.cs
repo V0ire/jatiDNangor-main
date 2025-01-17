@@ -1,27 +1,39 @@
 using System.Collections;
 using System.Numerics;
 using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Scripting.APIUpdating;
 
 public class CharMovement : MonoBehaviour
 {
+ /*Change the value at unity
+ Input the gameobject for animator*/
+    public Animator animator;
     [SerializeField] private bool isRepeatedMovement = false;
     [SerializeField] private float moveDuration = 0.1f;
     [SerializeField] private float gridSize = 1f;
     private bool isMoving = false;
     public LogicScript logic;
     public bool playerIsAlive = true;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private float x;
+    private float y;
+    private bool moving;
+    UnityEngine.Vector2 movement;
     void Start()
     {
-        logic = GameObject.FindGameObjectWithTag("logic").GetComponent<LogicScript>();
+        logic = GameObject.FindGameObjectWithTag("logic").GetComponent<LogicScript>(); //input logic prefab
     }
 
-    // Update is called once per frame
     private void Update()
     {
+        /*Main code for char movement*/
+        x = Input.GetAxisRaw("Horizontal");
+        y = Input.GetAxisRaw("Vertical");
+        movement = new UnityEngine.Vector2(x, y);
+        Animate();
+        
         if (!isMoving && playerIsAlive)
         {
             System.Func<KeyCode, bool> inputFunction;
@@ -89,4 +101,22 @@ public class CharMovement : MonoBehaviour
         Debug.Log("missionSuccess true");
         }
     }
+    private void Animate() //
+    {
+        if(movement.magnitude > 0.1f || movement.magnitude < -0.1f)
+        {
+            moving = true;
+        }
+        else
+        {
+            moving = false;
+        }
+        if(moving)
+        {
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        }
+        animator.SetBool("Moving", moving);
+    }
+    
 }

@@ -12,7 +12,7 @@ public class CoinTrigger : MonoBehaviour
     }
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player")) //this code trigger when coin collide with player
         {
             logic.addCoin();
             Destroy(gameObject);

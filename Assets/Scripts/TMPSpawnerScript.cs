@@ -3,16 +3,13 @@ using UnityEngine;
 public class TMPSpawnerScript : MonoBehaviour
 {
     public GameObject tmp;
-    public float spawnRate = 3;
-    public float timer = 0;
-    public float heightOffset = 1;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public float spawnRate = 3; //Second per spawn
+    private float timer = 0; //default timer is start from 0
+    public float heightOffset = 1; //heightOffset for enemies spawn at random place based on vertical (y)
     void Start()
     {
-        spawnTMP();
+        spawnTMP(); //spawn first enemies
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (timer < spawnRate)
